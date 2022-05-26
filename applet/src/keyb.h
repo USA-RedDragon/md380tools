@@ -75,6 +75,8 @@ void set_keyb(int);
 void sms_rpt(void);
 void sms_wx(void);
 void sms_gps(void);
+void who_dat(int);
+void reset_backlight();
 
 keycode_t kb_ASCIItoTytera(uint8_t ascii);
 void kb_OnRemoteKeyEvent(uint8_t key_ascii, uint8_t key_down_flag );

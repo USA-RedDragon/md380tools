@@ -203,10 +203,16 @@ void handle_hotkey( int keycode )
 	    netmon_off();
 	
 	} else if ( (keycode) == (kc_cursor_up) ) {
-	    return ;	
+	  if ((nm_screen==0) && (! Menu_IsVisible() )) {
+      who_dat(keycode);
+    }
+    return ;	
 
 	} else if ( (keycode) == (kc_cursor_down) ) {
-	    return ;	
+    if ((nm_screen==0) && (! Menu_IsVisible() )){
+      who_dat(keycode);
+    }
+	  return ;	
 
 	} else if ( (keycode) == (kc_syslog_dump) ) {
             static int cnt = 0 ;

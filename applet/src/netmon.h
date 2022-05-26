@@ -40,9 +40,6 @@ inline int is_netmon_enabled()
 
 inline int is_netmon_visible()
 {
-    if( !is_netmon_enabled() ) {
-        return 0 ;
-    }
     return nm_screen != 0 ;
     //return !is_menu_visible();
 }
