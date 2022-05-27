@@ -87,6 +87,7 @@ const static wchar_t wt_keyb_legacy[]       = L"Legacy";        // Tradiotionall
 const static wchar_t wt_keyb_modern[]       = L"Modern";        // Modern keyb layout, reordered functions, special keys right column
 const static wchar_t wt_keyb_MD446[]        = L"MD-446";        // Tytera MD-446 special 6-key layout, no numeric keypad
 const static wchar_t wt_keyb_dev[]          = L"Develop";       // Developer mode
+const static wchar_t wt_keyb_baofeng[]      = L"Baofeng";       // Jacob's mode
 
 const static wchar_t wt_keyb_scroll[]       = L"Scroll Mode";   // scroll mode - enable or disable 
 const static wchar_t wt_scroll_off[]        = L"Scroll Off";    // disable scrolling
@@ -1226,6 +1227,16 @@ void create_menu_entry_keyb_mode_dev_screen(void)
 #endif
 }
 
+void create_menu_entry_keyb_mode_baofeng_screen(void)
+{
+    mn_create_single_timed_ack(wt_keyb_mode,wt_keyb_baofeng);
+    global_addl_config.keyb_mode = 4;
+    cfg_save();
+#if defined(FW_D13_020) || defined(FW_S13_020)
+    set_keyb(global_addl_config.keyb_mode);
+#endif
+}
+
 //==========================================================================================================//
 
 
@@ -1614,7 +1625,8 @@ void create_menu_entry_keybmode_screen(void)
     mn_submenu_add(wt_keyb_modern, create_menu_entry_keyb_mode_modern_screen);
     mn_submenu_add(wt_keyb_MD446, create_menu_entry_keyb_mode_MD446_screen);
     mn_submenu_add(wt_keyb_dev, create_menu_entry_keyb_mode_dev_screen);
-    
+    mn_submenu_add(wt_keyb_baofeng, create_menu_entry_keyb_mode_baofeng_screen);
+
     mn_submenu_finalize();
 }
 

@@ -149,6 +149,26 @@ void handle_hotkey( int keycode )
             nm_started5 = 0;    // reset nm_start flag used for some display handling
             nm_started6 = 0;    // reset nm_start flag used for some display handling
 
+	} else if ( (keycode) == (kc_power) ) {
+    int bitStatus = (tx_power_config >> 5) & 1;
+    if (bitStatus == 0) {
+        tx_power_config |= (1 << 5);
+    } else {
+        tx_power_config &= ~(1 << 5);
+    }
+    write_current_channel_info_to_spi(selected_channel);
+    channel_info_read_spi_init(selected_channel);
+	  return ;
+	} else if ( (keycode) == (kc_reverse) ) {
+    int bitStatus = (talkaround_config >> 5) & 1;
+    if (bitStatus == 0) {
+        talkaround_config |= (1 << 5);
+    } else {
+        talkaround_config &= ~(1 << 5);
+    }
+    write_current_channel_info_to_spi(selected_channel);
+    channel_info_read_spi_init(selected_channel);
+	  return ;
 	} else if ( (keycode) == (kc_sms_test) ) {
 		if (global_addl_config.sms_rpt != 0) {          
 			sms_rpt();
@@ -517,7 +537,27 @@ void set_keyb(int keyb_mode)
 			kc_greenmenu = KC_MENU;
 			kc_redback = KC_BACK;
 			break ;
-	}
+
+  case 4:		// Baofeng
+			kc_netmon1 = KC_1;
+			kc_netmon2 = KC_2;
+			kc_netmon3 = KC_3;
+			kc_netmon4 = KC_4;
+			kc_netmon5 = KC_5;
+			kc_netmon6 = KC_6;
+			kc_netmon_clear = KC_8;
+			kc_netmon_off = KC_7;
+
+			kc_syslog_dump = KC_9;
+			kc_cursor_up = KC_UP;
+			kc_cursor_down = KC_DOWN;
+			kc_greenmenu = KC_MENU;
+			kc_redback = KC_BACK;
+      kc_power = KC_HASH;
+      kc_reverse = KC_STAR;
+			break ;
+
+  }
 
     LOGB("t=%d: keyb load %d\n", (int)IRQ_dwSysTickCounter, global_addl_config.keyb_mode ); // keyb layout loaded
 #else

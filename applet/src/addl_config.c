@@ -100,7 +100,7 @@ void cfg_load()
     R(global_addl_config.fm_bw,1);
     R(global_addl_config.fm_dev,6);
     R(global_addl_config.fm_mode,255);		// 2017-06-07	0x00-0xFF FM Opmode register
-    R(global_addl_config.keyb_mode,3);		// 2017-05-25	0-legacy, 1-modern, 2-MD446, 3-develop
+    R(global_addl_config.keyb_mode,4);		// 2022-05-27	0-legacy, 1-modern, 2-MD446, 3-develop, 4-Baofeng
     R(global_addl_config.scroll_mode,2);  	// 2017-06-10   0=off, 1=fast, 2=slow
     R(global_addl_config.devmode_level,3);	// 2017-06-06	0-off, 1-show FM options, 2-extended USB logging, 3-hide menus
     R(global_addl_config.sms_mode,1);		// 2017-07-23	SMS Mode 0=off, 1=on

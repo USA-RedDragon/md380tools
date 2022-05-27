@@ -50,6 +50,10 @@ extern uint16_t backlight_timer;   // seems to be a COUNTDOWN, decremented every
 extern uint8_t kb_top_side_key_press_time;
 extern uint8_t kb_bot_side_key_press_time;
 extern uint8_t kb_side_key_max_time;
+extern uint8_t tx_power_config;
+extern uint8_t talkaround_config;
+extern uint8_t selected_channel;
+
 // define keycodes for variable assignment
 uint8_t kc_netmon1;
 uint8_t kc_netmon2;
@@ -68,6 +72,8 @@ uint8_t kc_cursor_down;
 uint8_t kc_greenmenu;
 uint8_t kc_redback;
 uint8_t kc_lastmode;
+uint8_t kc_power;
+uint8_t kc_reverse;
 
 void evaluate_sidekey(int);
 void kb_handle(int);
@@ -77,6 +83,9 @@ void sms_wx(void);
 void sms_gps(void);
 void who_dat(int);
 void reset_backlight();
+
+void write_current_channel_info_to_spi(uint8_t channel);
+void channel_info_read_spi_init(uint8_t channel);
 
 keycode_t kb_ASCIItoTytera(uint8_t ascii);
 void kb_OnRemoteKeyEvent(uint8_t key_ascii, uint8_t key_down_flag );
