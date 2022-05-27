@@ -101,10 +101,10 @@ if __name__ == '__main__':
 
     # Change the manufacturer string.
     patcher.setstring(0x080f9e4c,
-                      "Travis Goodspeed KK4VCZ")
+                      "Jacob McSwain KI5VMF")
     # Change the device name.
     patcher.setstring(0x080d1820,
-                      "Patched MD380")
+                      "Tytera MD380")
 
     # Fixes a typo in 2.032.  Unneeded in 2.034.
     patcher.setwstring(0x080d17e8,
