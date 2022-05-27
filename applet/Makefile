@@ -103,8 +103,8 @@ vpath %.a lib
 
 ROOT=$(shell pwd)
 
-CFLAGS += -Iinc -Ilib -Ilib/inc -I.
-CFLAGS += -Ilib/inc/core -Ilib/inc/peripherals
+CFLAGS += -Iinc -Ilib/stm32f4/inc -Ilib/codec2/src -I.
+CFLAGS += -Ilib/stm32f4/inc/core -Ilib/stm32f4/inc/peripherals
 CFLAGS += -D "MD380_$(subst .,_,$(SRCVERSION))"  # ISO C99 requires whitespace after
 
 # DL4YHF: Had to modify the name of the startup file, because it was 
@@ -133,7 +133,8 @@ endif
 
 # strange dependencies (migrate down to lib makefile if need be)
 lib: src/version.h config.h
-	"${MAKE}" -C lib libstm32f4.a
+	"${MAKE}" -C lib/stm32f4 libstm32f4.a
+	"${MAKE}" -C lib/codec2 libcodec2.a
 
 .PHONY: base.img
 base.img:
@@ -160,7 +161,7 @@ experiment.bin: wrapped.bin
 
 $(SRCS): config.h src/*.h | lib	
 applet.elf: $(SRCS)
-	$(CC) $(CFLAGS) -Wl,--no-wchar-size-warning -Wl,-Map,$(basename $@).map $^ -o $@ -Llib -lstm32f4 -Xlinker --just-symbols=src/symbols_$(SRCVERSION)
+	$(CC) $(CFLAGS) -Wl,--no-wchar-size-warning -Wl,-Map,$(basename $@).map $^ -o $@ -Llib/codec2 -lcodec2 -Llib/stm32f4 -lstm32f4 -Xlinker --just-symbols=src/symbols_$(SRCVERSION)
 	
 %.img: %.elf	
 	$(OBJDUMP) -t $< >$(basename $@).img.sym
@@ -174,7 +175,8 @@ src/version.h: src/*.c
 
 clean:
 	"${MAKE}" -C ../patches/$(PATCHDIR) clean
-	"${MAKE}" -C lib clean
+	"${MAKE}" -C lib/stm32f4 clean
+	"${MAKE}" -C lib/codec2 clean
 	rm -f *.img *.lst *.bin *.elf *.hex *.o *~ *.sym src/*~ src/version.h *.map *.tmp
 
 image_D02:
