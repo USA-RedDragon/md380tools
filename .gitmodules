@@ -1,0 +1,4 @@
+[submodule "codec2"]
+	path = applet/lib/codec2/upstream
+	url = https://github.com/drowe67/codec2.git
+	branch = 199a9e13c7cfda099e3c7671bd34a8950c5a0152

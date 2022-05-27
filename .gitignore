@@ -69,6 +69,7 @@ target/
 *.bin
 *.elf
 version.h
+!applet/lib/codec2/inc/codec2/version.h
 
 # Output from Radare2 / disassembly converted into HTML
 /annotations/d13.020/listing.txt
