@@ -1254,7 +1254,7 @@ static void PollKeys(void)
          { --autorepeat_countdown;
          }
         else // send the same key again, repeatedly ..  
-         { autorepeat_countdown = 130/*ms*/ / 24; // 1 / "autorepeat RATE"
+         { autorepeat_countdown = 175/*ms*/ / 24; // 1 / "autorepeat RATE"
            Menu_OnKey( key );
          }   
       }
@@ -1498,7 +1498,7 @@ void SysTick_Handler(void)
       }
    }
 
-#if(1) // kludge to find out if THIS SysTick_Handler is called at all (2017-05-18)
+#if(0) // kludge to find out if THIS SysTick_Handler is called at all (2017-05-18)
   if( (oldSysTickCounter > 5000)   // allow Tytera to initialize everything
     &&(oldSysTickCounter < 20000)) // .. but don't annoy user with endlessly flashing green LED
    { if( (uint8_t)oldSysTickCounter == 0 )

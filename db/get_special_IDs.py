@@ -32,6 +32,9 @@ print("Fetching list of special IDs from BM master servers.\n")
 
 # file = open('users.csv', 'a')
 file = open('special.tmp', 'a')
+
+file.close()
+sys.exit(0)
 # Add ID 5000 manually as this is not listed anywhere
 # file.write('5000,Status,,,,,,\n')
 

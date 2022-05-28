@@ -83,7 +83,7 @@ CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 OBJDUMP=arm-none-eabi-objdump
 
-GIT_VERSION := $(shell git describe --dirty --always --tags)
+GIT_VERSION := $(shell git describe --always --tags)
 
 LINKSCRIPT=applet_$(SRCVERSION).ld
 

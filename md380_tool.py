@@ -83,7 +83,7 @@ class Tool(DFU):
         super(Tool, self).__init__(device, alt)
         # We need to read the manufacturer string to hook the added USB functions
         # Some systems (Raspian Jessie) don't have this property
-        getattr(device, "manufacturer")
+        #
 
     def drawtext(self, str, a, b):
         """Sends a new MD380 command to draw text on the screen.."""
