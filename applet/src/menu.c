@@ -27,6 +27,7 @@
 #include "codeplug.h"
 #include "narrator.h" // optional: reads out channel, zone, menu in Morse code.
 #include "system_hrc5000.h"
+#include "netmon.h"
 
 // Main menu name
 const static wchar_t wt_main_menu[]         = L"MD380Tools";    // MD380Tools menu name
@@ -469,15 +470,20 @@ void mn_submenu_add(const wchar_t * label, void (*func)())
     menu_mem->numberof_menu_entries++ ;
 }
 
-void mn_submenu_add_98(const wchar_t * label, void (*func)())
+void mn_submenu_add_98_enabled(const wchar_t * label, void (*func)(), int enabled)
 {
     menu_t *menu_mem = get_menu_stackpoi();
     
     func = MKTHUMB(func);
     
-    md380_create_menu_entry(md380_menu_id + menu_mem->numberof_menu_entries, label, func, MKTHUMB(md380_menu_entry_back), 0x98, 0, 1);
+    md380_create_menu_entry(md380_menu_id + menu_mem->numberof_menu_entries, label, func, MKTHUMB(md380_menu_entry_back), 0x98, 0, enabled);
 
     menu_mem->numberof_menu_entries++ ;
+}
+
+void mn_submenu_add_98(const wchar_t * label, void (*func)())
+{
+    mn_submenu_add_98_enabled(label, func, 1);
 }
 
 void mn_submenu_add_8a(const wchar_t * label, void (*func)(), int enabled)
@@ -2752,7 +2758,7 @@ void create_menu_entry_keyboard(void)
    md380_menu_entry_selected = 0;
    mn_submenu_init(wt_keyb_menu);
 
-   mn_submenu_add_98(wt_keyb_mode, create_menu_entry_keybmode_screen);
+   mn_submenu_add_98_enabled(wt_keyb_mode, create_menu_entry_keybmode_screen, is_netmon_enabled());
    mn_submenu_add_98(wt_sidebutton_menu, create_menu_entry_sidebutton_screen);
    mn_submenu_add_98(wt_keyb_scroll, create_menu_entry_scroll_mode);
 
