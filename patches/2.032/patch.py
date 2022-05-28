@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
     # Change the manufacturer string.
     patcher.setstring(0x080f9e4c,
-                      "Jacob McSwain KI5VMF")
+                      "USA-RedDragon KI5VMF")
     # Change the device name.
     patcher.setstring(0x080d1820,
                       "Tytera MD380")

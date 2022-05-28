@@ -90,7 +90,7 @@ const static wchar_t wt_keyb_legacy[]       = L"Legacy";        // Tradiotionall
 const static wchar_t wt_keyb_modern[]       = L"Modern";        // Modern keyb layout, reordered functions, special keys right column
 const static wchar_t wt_keyb_MD446[]        = L"MD-446";        // Tytera MD-446 special 6-key layout, no numeric keypad
 const static wchar_t wt_keyb_dev[]          = L"Develop";       // Developer mode
-const static wchar_t wt_keyb_baofeng[]      = L"Baofeng";       // Jacob's mode
+const static wchar_t wt_keyb_baofeng[]      = L"Baofeng";       // Baofeng mode
 
 const static wchar_t wt_keyb_scroll[]       = L"Scroll Mode";   // scroll mode - enable or disable 
 const static wchar_t wt_scroll_off[]        = L"Scroll Off";    // disable scrolling

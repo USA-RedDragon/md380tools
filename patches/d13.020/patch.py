@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     # Change the manufacturer string.
     patcher.setstring(0x080f86c8,
-                      "Travis Goodspeed KK4VCZ")
+                      "USA-RedDragon KI5VMF")
     # Change the device name.
     patcher.setstring(0x080cfff4,
                       "Patched MD380")

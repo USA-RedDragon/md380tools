@@ -483,5 +483,5 @@ void reboot_into_bootloader(){
 
 //Must be const, because globals will be wacked.
 //const wchar_t mfgstr[]=L"Travis KK4VCZ";
-const char mfgstr[]="Travis Goodspeed KK4VCZ"; //"\x1c\x03T\0r\0a\0v\0i\0s\0 \0K\0K\x004\0V\0C\0Z\0";
+const char mfgstr[]="USA-RedDragon KI5VMF"; //"\x1c\x03T\0r\0a\0v\0i\0s\0 \0K\0K\x004\0V\0C\0Z\0";
 
