@@ -157,7 +157,6 @@ struct TAContext
   char text[28];
 };
 
-struct TAContext taContext;
 extern struct TAContext talkerAlias;
 
 #ifdef __cplusplus
