@@ -33,6 +33,27 @@
 #endif
 #include <stdint.h>
 
+// define keycodes for variable assignment
+static uint8_t kc_netmon1;
+static uint8_t kc_netmon2;
+static uint8_t kc_netmon3;
+static uint8_t kc_netmon4;
+static uint8_t kc_netmon5;
+static uint8_t kc_netmon6;
+static uint8_t kc_sms_test;
+static uint8_t kc_talkgroup;
+static uint8_t kc_copy_contact;
+static uint8_t kc_netmon_clear;
+static uint8_t kc_netmon_off;
+static uint8_t kc_syslog_dump;
+static uint8_t kc_cursor_up;
+static uint8_t kc_cursor_down;
+static uint8_t kc_greenmenu;
+static uint8_t kc_redback;
+static uint8_t kc_lastmode;
+static uint8_t kc_power;
+static uint8_t kc_reverse;
+
 uint8_t kb_backlight=0; // flag to disable backlight via sidekey.
 // Other keyboard-related variables belong to the original firmware,
 // e.g. kb_keypressed, address defined in symbols_d13.020 (etc).

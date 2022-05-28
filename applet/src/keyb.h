@@ -53,27 +53,6 @@ extern uint8_t kb_side_key_max_time;
 extern uint8_t tx_power_config;
 extern uint8_t talkaround_config;
 
-// define keycodes for variable assignment
-uint8_t kc_netmon1;
-uint8_t kc_netmon2;
-uint8_t kc_netmon3;
-uint8_t kc_netmon4;
-uint8_t kc_netmon5;
-uint8_t kc_netmon6;
-uint8_t kc_sms_test;
-uint8_t kc_talkgroup;
-uint8_t kc_copy_contact;
-uint8_t kc_netmon_clear;
-uint8_t kc_netmon_off;
-uint8_t kc_syslog_dump;
-uint8_t kc_cursor_up;
-uint8_t kc_cursor_down;
-uint8_t kc_greenmenu;
-uint8_t kc_redback;
-uint8_t kc_lastmode;
-uint8_t kc_power;
-uint8_t kc_reverse;
-
 void evaluate_sidekey(int);
 void kb_handle(int);
 void set_keyb(int);
