@@ -449,7 +449,7 @@ void loadfirmwareversion_hook()
         version_state++;
         break;
       case 1:
-        memcpy(print_buffer, VERSIONDATE, 24);
+        memcpy(print_buffer, VERSIONDATE, sizeof(VERSIONDATE));
         version_state++;
         break;
     }
