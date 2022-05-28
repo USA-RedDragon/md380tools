@@ -2,6 +2,9 @@
    \brief MD380 callback functions.
 */
 
+#ifndef MD380_H
+#define MD380_H
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -101,6 +104,8 @@ void        OS_EXIT_CRITICAL(int);
 void*   main_menu(void *);     // menu exec
 
 void*   md380_menu_entry_back(void);
+void*   md380_menu_entry_view_number(void);
+void*   md380_menu_entry_call_alert(void);
 void    md380_create_main_menu_entry(void); // doesn't return anything (no 'void*')
 
 // create one new menu entry
@@ -124,6 +129,10 @@ uint8_t   md380_menu_entry_selected;
 uint8_t   md380_menu_id;
 
 extern wchar_t          md380_wt_programradio[];  // menutext <- menu_entry_programradio
+extern wchar_t          md380_wt_call_alert[]; 
+extern wchar_t          md380_wt_view_number[];
+extern wchar_t          md380_wt_selected[];
+extern wchar_t          md380_wt_contact[];
 
 //! program_radio_unprohibited (menu entry) ... bulding site is an struct
 extern uint8_t md380_program_radio_unprohibited[];
@@ -166,7 +175,17 @@ void md380_Write_Data_2display(uint8_t data);
 void md380_GPIO_SetBits(int addr, uint16_t GPIO_Pin); 
 void md380_GPIO_ResetBits(int addr, uint16_t GPIO_Pin);
 
+typedef struct {
+   uint8_t id_l ;
+   uint8_t id_m ;
+   uint8_t id_h ;
+} selected_talkgroup_t;
 
+extern selected_talkgroup_t selected_talkgroup;
+extern int md380_current_active_contact;
+extern uint8_t selected_channel;
+void write_current_channel_info_to_spi(uint8_t channel);
+void channel_info_read_spi_init(uint8_t channel);
 
 //! Functions and Variabes regarding the beep_
 // not yet known ;)
@@ -197,3 +216,4 @@ void f_4225();
 // major display driver for popup during RX/TX
 void F_4315();
 
+#endif

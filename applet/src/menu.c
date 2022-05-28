@@ -40,6 +40,8 @@ const static wchar_t wt_main_keyb[]         = L"Keyboard";	// main menu 5 - keyb
 const static wchar_t wt_main_tones[]        = L"Tones";		// main menu 6 - tone settings
 const static wchar_t wt_main_dev[]          = L"Developer";	// main menu 7 - developer menu
 
+const static wchar_t wt_set_contact[]         = L"Set Active";    // Set contact active feature
+
 #if defined(FW_D13_020) || defined(FW_S13_020)
 // Sub menu header
 const static wchar_t wt_disp_menu[]         = L"Display Setup";	// sub menu 1 header title
@@ -2918,6 +2920,67 @@ void create_menu_utilies_hook(void)
         md380_create_menu_entry(9, wt_main_menu, MKTHUMB(create_main_md380tools_screen), MKTHUMB(md380_menu_entry_back), 0x8a, 0, 1);
     }
 #  endif
+
+#endif // CONFIG_MENU ?
+
+}
+
+int find_contact_idx_by_tg(int tg)
+{
+    int addr = 0x5f80;
+    for (int i = 0; i < 1000; i++) {
+        contact_t cur_contact;
+        md380_spiflash_read(&cur_contact, addr+(sizeof(contact_t)*i), sizeof(contact_t));
+
+        int current_tg = (int) cur_contact.id_h;
+        current_tg = (current_tg<<8) + (int) cur_contact.id_m;
+        current_tg = (current_tg<<8) + (int) cur_contact.id_l;
+
+        if (current_tg == tg) {
+            return i+1; //This option is 1-indexed
+        }
+    }
+    return 0;
+}
+
+void set_contact(void) {
+    int tg = (int) selected_talkgroup.id_h;
+    tg = (tg<<8) + (int) selected_talkgroup.id_m;
+    tg = (tg<<8) + (int) selected_talkgroup.id_l;
+    md380_current_active_contact = find_contact_idx_by_tg(tg);
+    write_current_channel_info_to_spi(selected_channel);
+    channel_info_read_spi_init(selected_channel);
+
+    mn_create_single_timed_ack(md380_wt_selected, md380_wt_contact);
+}
+
+void create_menu_contact_details_group_hook(void)
+{
+    menu_t *menu_mem = get_menu_stackpoi();
+    menu_mem->entries = &md380_menu_mem_base[md380_menu_id];
+    menu_mem->numberof_menu_entries = 4;
+
+
+#ifdef CONFIG_MENU
+    md380_create_menu_entry(md380_menu_id + (menu_mem->numberof_menu_entries-1), wt_set_contact, MKTHUMB(set_contact), MKTHUMB(md380_menu_entry_back), 0x8a, 0, 1);
+    // Original Item
+    md380_create_menu_entry(md380_menu_id, md380_wt_view_number, MKTHUMB(md380_menu_entry_view_number), MKTHUMB(md380_menu_entry_back), 0x8a, 0, 1);
+
+#endif // CONFIG_MENU ?
+
+}
+
+void create_menu_contact_details_private_hook(void)
+{
+    menu_t *menu_mem = get_menu_stackpoi();
+    menu_mem->entries = &md380_menu_mem_base[md380_menu_id];
+    menu_mem->numberof_menu_entries = 13;
+
+
+#ifdef CONFIG_MENU
+    md380_create_menu_entry(md380_menu_id + (menu_mem->numberof_menu_entries-1), wt_set_contact, MKTHUMB(set_contact), MKTHUMB(md380_menu_entry_back), 0x8a, 0, 1);
+    // Original Item
+    md380_create_menu_entry(md380_menu_id, md380_wt_call_alert, MKTHUMB(md380_menu_entry_call_alert), MKTHUMB(md380_menu_entry_back), 0x8a, 0, 1);
 
 #endif // CONFIG_MENU ?
 

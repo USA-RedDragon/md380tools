@@ -52,7 +52,6 @@ extern uint8_t kb_bot_side_key_press_time;
 extern uint8_t kb_side_key_max_time;
 extern uint8_t tx_power_config;
 extern uint8_t talkaround_config;
-extern uint8_t selected_channel;
 
 // define keycodes for variable assignment
 uint8_t kc_netmon1;

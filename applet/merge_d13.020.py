@@ -709,6 +709,11 @@ if __name__ == '__main__':
     # additional menu hook
     merger.hookbl(0x080135a8, sapplet.getadr("create_menu_utilies_hook"), 0)
 
+    # hooks contact details menu
+    merger.hookbl(0x08011048, sapplet.getadr("create_menu_contact_details_group_hook"), 0)  # Group calls.
+    merger.hookbl(0x08010cb4, sapplet.getadr("create_menu_contact_details_private_hook"), 0)  # Private calls.
+
+
     # init the addl global config struct from spi flash
     merger.hookbl(0x08046326, sapplet.getadr("init_global_addl_config_hook"), 0)
 
