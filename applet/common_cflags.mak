@@ -13,7 +13,7 @@ CFLAGS += -Ofast
 # Link-time Optimization
 CFLAGS += -fuse-ld=$(shell which ld.lld)
 
-# Warnings, eventually -Werror
-CFLAGS += -Wall
+# Warnings
+CFLAGS += -Wall -Werror
 # Disabled warnings
 CFLAGS += -Wno-unused-command-line-argument
