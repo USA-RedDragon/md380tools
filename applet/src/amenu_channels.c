@@ -145,7 +145,7 @@ int readFrequency(channel_t* ch, frequency_t* freq, char fRx)
 int readTone(channel_t* chan, tone_t* tone, char fEnc)
 {
 	tone_t tt;
-	if (*(uint8_t*)&chan->settings[(fEnc ? 26 : 24)] == 0xFFFF) {
+	if (*(uint8_t*)&chan->settings[(fEnc ? 26 : 24)] == (uint8_t) 0xFFFF) {
 		tone->fType = 0;
 		sprintf(tone->text, "None");
 		return 0;
