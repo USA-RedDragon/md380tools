@@ -13,7 +13,7 @@
 
 #ifdef DMR_USERDB_NOT_IN_FLASH
 
-static char * getdata(char * dest, const char *  src, int count) {
+static char* getdata(char* dest, const char* src, int count) {
     memcpy(dest, src, count);
     return dest;
 }
@@ -21,14 +21,14 @@ static char * getdata(char * dest, const char *  src, int count) {
 #else /* user DB is in flash memory */
 
 #include "md380.h"
-#include "usersdb.h"
 #include "spiflash.h"
+#include "usersdb.h"
 
 /* All user database data is accessed through this function.
  * This makes it easier to adapt to different kinds of sources.
  */
-static char * getdata(char * dest, const char * src, int count) {
-    md380_spiflash_read(dest, (long) src, count);
+static char* getdata(char* dest, const char* src, int count) {
+    md380_spiflash_read(dest, (long)src, count);
     return dest;
 }
 
@@ -40,18 +40,18 @@ static char * getdata(char * dest, const char * src, int count) {
  * don't fit into out[] are truncated. out[] will always be
  * null terminated if outsize > 0.
  */
-static void readline(char *out, const char *in, int outsize)
-{
-    if( outsize <= 0 ) return;
-    char buff[64];
-    const int blen = sizeof (buff);
+static void readline(char* out, const char* in, int outsize) {
+    if (outsize <= 0)
+        return;
+    char      buff[64];
+    const int blen = sizeof(buff);
     outsize -= 1; // for null terminator
     while (outsize > 0) {
         int chunk = outsize > blen ? blen : outsize;
         getdata(buff, in, chunk);
         for (int i = 0; i < chunk; ++i) {
             char c = buff[i];
-            if( c == '\0' || c == '\n' ) {
+            if (c == '\0' || c == '\n') {
                 *out++ = '\0';
                 return;
             }
@@ -67,7 +67,7 @@ static void readline(char *out, const char *in, int outsize)
  * the pointer to the character following that newline
  */
 static const char* next_line_ptr(const char* p) {
-    char buffer[64];
+    char      buffer[64];
     const int blen = sizeof(buffer);
     for (;;) {
         getdata(buffer, p, blen);
@@ -84,25 +84,26 @@ static const char* next_line_ptr(const char* p) {
 
 /* parse number as text and return its numerical value
  */
-static long getfirstnumber(const char * p) {
-  char buffer[64];
-  return (atol(getdata(buffer, p, 60)));
+static long getfirstnumber(const char* p) {
+    char buffer[64];
+    return (atol(getdata(buffer, p, 60)));
 }
 
 /* tries to locate and copy the line of text that starts with the
  * number dmr_search to the output buffer outstr. The return value
  * indicates whether the DMR ID was found (1) or not (0).
  */
-static int find_dmr(char *outstr, long dmr_search,
-                    const char *dmr_begin, const char *dmr_end,
-                    int outsize)
-{
+static int find_dmr(char* outstr, long dmr_search, const char* dmr_begin, const char* dmr_end, int outsize) {
     /* As long as there is at least one line of text between
        offsets dmr_begin and dmr_end... */
     while (dmr_begin != dmr_end) {
         const char* dmr_test = next_line_ptr(dmr_begin + (dmr_end - dmr_begin) / 2);
-        if (dmr_test == dmr_end) { dmr_test = next_line_ptr(dmr_begin); }
-        if (dmr_test == dmr_end) { dmr_test = dmr_begin; }
+        if (dmr_test == dmr_end) {
+            dmr_test = next_line_ptr(dmr_begin);
+        }
+        if (dmr_test == dmr_end) {
+            dmr_test = dmr_begin;
+        }
         long id = getfirstnumber(dmr_test);
         if (id == dmr_search) {
             readline(outstr, dmr_test, outsize);
@@ -117,23 +118,23 @@ static int find_dmr(char *outstr, long dmr_search,
     return 0;
 }
 
-static int find_dmr_user(char *outstr, int dmr_search, const char *data, int outsize)
-{
+static int find_dmr_user(char* outstr, int dmr_search, const char* data, int outsize) {
     const long datasize = getfirstnumber(data);
 
     // filesize @ 20160420 is 2279629 bytes
     //          @ 20170213 is 2604591 bytes
-    if (datasize == 0 || datasize >15728639)  // 15 Meg sanity limit
-       return(0);
+    if (datasize == 0 || datasize > 15728639) // 15 Meg sanity limit
+        return (0);
 
-    const char *data_start = next_line_ptr(data);
-    const char *data_end = data_start + datasize; // exclusive
+    const char* data_start = next_line_ptr(data);
+    const char* data_end   = data_start + datasize; // exclusive
     return find_dmr(outstr, dmr_search, data_start, data_end, outsize);
 }
 
-//#define _IS_TRAIL(buf, i, l) ((i > 0 && buf[i-1] == ',' && buf[i] == ' ') || (i < l && buf[i+1] == ',' && buf[i] == ' '))
+//#define _IS_TRAIL(buf, i, l) ((i > 0 && buf[i-1] == ',' && buf[i] == ' ') || (i < l && buf[i+1] == ',' && buf[i] == '
+//'))
 //
-//uint8_t get_dmr_user_field(uint8_t field, char *outstr, int dmr_search, int outsize)
+// uint8_t get_dmr_user_field(uint8_t field, char *outstr, int dmr_search, int outsize)
 //{
 //    char buf[BSIZE];
 //    uint8_t pos = 0;
@@ -158,67 +159,65 @@ static int find_dmr_user(char *outstr, int dmr_search, const char *data, int out
 //    return pos;
 //}
 
-void usr_splitbuffer(user_t *up)
-{
-    char *cp = up->buffer ;
-    char *start = up->buffer ;
+void usr_splitbuffer(user_t* up) {
+    char* cp    = up->buffer;
+    char* start = up->buffer;
 
-    for(int fld=0;fld<8;fld++) {
+    for (int fld = 0; fld < 8; fld++) {
 
-        while(1) {
-            if( *cp == 0 ) {
-                break ;
+        while (1) {
+            if (*cp == 0) {
+                break;
             }
-            if( *cp == ',' ) {
-                *cp = 0 ;
-                cp++ ;
-                break ;
+            if (*cp == ',') {
+                *cp = 0;
+                cp++;
+                break;
             }
-            cp++ ;
+            cp++;
         }
-        
-        switch(fld) {
-            case 0 :
-                up->id = start ;
-                break ;
-            case 1 :
-                up->callsign = start ;
-                break ;
-            case 2 :
-                up->name = start ;
-                break ;
-            case 3 :
-                up->place = start ;
-                break ;
-            case 4 :
-                up->state = start ;
-                break ;
-            case 5 :
-                up->firstname = start ;
-                break ;
-            case 6 :
-                up->country = start ;
-                break ;
+
+        switch (fld) {
+            case 0:
+                up->id = start;
+                break;
+            case 1:
+                up->callsign = start;
+                break;
+            case 2:
+                up->name = start;
+                break;
+            case 3:
+                up->place = start;
+                break;
+            case 4:
+                up->state = start;
+                break;
+            case 5:
+                up->firstname = start;
+                break;
+            case 6:
+                up->country = start;
+                break;
         }
-        
-        start = cp ;
+
+        start = cp;
     }
 }
 
-int usr_find_by_dmrid( user_t *up, int dmrid )
-{
-    if( !find_dmr_user(up->buffer, dmrid, (void *) 0x100000, BSIZE) ) {
+int usr_find_by_dmrid(user_t* up, int dmrid) {
+    if (!find_dmr_user(up->buffer, dmrid, (void*)0x100000, BSIZE)) {
         // safeguard
-        up->buffer[0] = '?' ;
-        up->buffer[1] = 0 ;
+        up->buffer[0] = '?';
+        up->buffer[1] = 0;
         usr_splitbuffer(up);
-    
-        return 0 ;
+
+        return 0;
     }
-    
+
     // safeguard
-    up->buffer[BSIZE-1] = 0 ;
-    
+    up->buffer[BSIZE - 1] = 0;
+
     usr_splitbuffer(up);
-    return 1 ;
+    return 1;
 }

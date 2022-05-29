@@ -197,3 +197,7 @@ ci:
 	"${MAKE}" CIFLAGS="-Werror -Wno-cpp" clean image_D02
 	"${MAKE}" CIFLAGS="-Werror -Wno-cpp" clean image_S13
 	"${MAKE}" CIFLAGS="-Werror -Wno-cpp" clean image_D13
+
+.PHONY: format
+format:
+	find src -type f -name '*.c' -o -name '*.h' | xargs -I {} clang-format -i {}

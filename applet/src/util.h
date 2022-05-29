@@ -1,6 +1,6 @@
 /*
  *  util.h
- * 
+ *
  */
 
 #ifndef UTIL_H
@@ -11,14 +11,14 @@ extern "C" {
 #endif
 
 #include <stddef.h>
+#include <stdint.h>
 
-void mkascii( char *dst, int dstlen, wchar_t *src );
+void mkascii(char* dst, int dstlen, wchar_t* src);
 
-uint32_t uli2w(uint32_t num, wchar_t *bf);
+uint32_t uli2w(uint32_t num, wchar_t* bf);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* UTIL_H */
-

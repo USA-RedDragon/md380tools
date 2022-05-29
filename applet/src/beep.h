@@ -1,6 +1,6 @@
 /*
  *  beep.h
- * 
+ *
  */
 
 #ifndef BEEP_H
@@ -10,20 +10,20 @@
 extern "C" {
 #endif
 
-// list @ 0x0802fa2e    
-    
-#define BEEP_4 4 
-#define BEEP_9 9
+// list @ 0x0802fa2e
+
+#define BEEP_4       4
+#define BEEP_9       9
 #define BEEP_DENY_TX 14
-#define BEEP_25 0x19
-#define BEEP_ROGER 36 // 9 on D13?
-    
-// 10...41    
-    
+#define BEEP_25      0x19
+#define BEEP_ROGER   36 // 9 on D13?
+
+// 10...41
+
 #define BEEP_TEST_1 0x40
 #define BEEP_TEST_2 0x41
 #define BEEP_TEST_3 0x42
-    
+
 #if 0    
     
 04: 3 tone  
@@ -50,17 +50,14 @@ extern "C" {
 
 24: roger beep
 
-20...29 
+20...29
 
 #endif
 
-void bp_send_beep( uint8_t beep );
-
-
+void bp_send_beep(uint8_t beep);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* BEEP_H */
-

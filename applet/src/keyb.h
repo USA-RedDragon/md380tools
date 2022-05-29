@@ -1,6 +1,6 @@
 /*
  *  keyb.h
- * 
+ *
  */
 
 #ifndef KEYB_H
@@ -13,23 +13,23 @@ extern "C" {
 #endif
 
 typedef enum {
-	KC_0 = 0,
-	KC_1 = 1,
-	KC_2 = 2,
-	KC_3 = 3,
-	KC_4 = 4,
-	KC_5 = 5,
-	KC_6 = 6,
-	KC_7 = 7,
-	KC_8 = 8,
-	KC_9 = 9,
-	KC_MENU = 10,
-	KC_UP = 11,
-	KC_DOWN = 12,
-	KC_BACK = 13,
-	KC_STAR = 14,
-	KC_HASH = 15,
-        KC_NO_VALID_KEY = 0xFF // kludge for remote control (not used by Tytera)
+    KC_0            = 0,
+    KC_1            = 1,
+    KC_2            = 2,
+    KC_3            = 3,
+    KC_4            = 4,
+    KC_5            = 5,
+    KC_6            = 6,
+    KC_7            = 7,
+    KC_8            = 8,
+    KC_9            = 9,
+    KC_MENU         = 10,
+    KC_UP           = 11,
+    KC_DOWN         = 12,
+    KC_BACK         = 13,
+    KC_STAR         = 14,
+    KC_HASH         = 15,
+    KC_NO_VALID_KEY = 0xFF // kludge for remote control (not used by Tytera)
 } keycode_t;
 
 void f_4101();
@@ -37,21 +37,21 @@ void f_4101();
 extern uint8_t kb_backlight; // flag to disable backlight via sidekey
 
 #if defined(FW_D13_020) || defined(FW_S13_020)
-# define CAN_POLL_KEYS 1
-extern uint8_t kb_keycode;
-extern uint8_t kb_keypressed;
-extern uint8_t kb_key_press_time;
-extern uint8_t top_side_button_pressed_function;
-extern uint8_t bottom_side_button_pressed_function;
-extern uint8_t top_side_button_held_function;
-extern uint8_t bottom_side_button_held_function;
+#define CAN_POLL_KEYS 1
+extern uint8_t  kb_keycode;
+extern uint8_t  kb_keypressed;
+extern uint8_t  kb_key_press_time;
+extern uint8_t  top_side_button_pressed_function;
+extern uint8_t  bottom_side_button_pressed_function;
+extern uint8_t  top_side_button_held_function;
+extern uint8_t  bottom_side_button_held_function;
 extern uint16_t kb_row_col_pressed;
-extern uint16_t backlight_timer;   // seems to be a COUNTDOWN, decremented every 10 (?) ms
-extern uint8_t kb_top_side_key_press_time;
-extern uint8_t kb_bot_side_key_press_time;
-extern uint8_t kb_side_key_max_time;
-extern uint8_t tx_power_config;
-extern uint8_t talkaround_config;
+extern uint16_t backlight_timer; // seems to be a COUNTDOWN, decremented every 10 (?) ms
+extern uint8_t  kb_top_side_key_press_time;
+extern uint8_t  kb_bot_side_key_press_time;
+extern uint8_t  kb_side_key_max_time;
+extern uint8_t  tx_power_config;
+extern uint8_t  talkaround_config;
 
 void evaluate_sidekey(int);
 void kb_handle(int);
@@ -66,10 +66,10 @@ void write_current_channel_info_to_spi(uint8_t channel);
 void channel_info_read_spi_init(uint8_t channel);
 
 keycode_t kb_ASCIItoTytera(uint8_t ascii);
-void kb_OnRemoteKeyEvent(uint8_t key_ascii, uint8_t key_down_flag );
+void      kb_OnRemoteKeyEvent(uint8_t key_ascii, uint8_t key_down_flag);
 
 #else
-# define CAN_POLL_KEYS 0  /* 0 : cannot poll keys for this firmware yet */
+#define CAN_POLL_KEYS 0 /* 0 : cannot poll keys for this firmware yet */
 #endif
 
 #ifdef __cplusplus
@@ -77,4 +77,3 @@ void kb_OnRemoteKeyEvent(uint8_t key_ascii, uint8_t key_down_flag );
 #endif
 
 #endif /* KEYB_H */
-

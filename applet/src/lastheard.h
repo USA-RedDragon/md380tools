@@ -1,6 +1,6 @@
 /*
  *  lastheard.h
- * 
+ *
  */
 
 #ifndef LASTHEARD_H
@@ -10,30 +10,21 @@
 extern "C" {
 #endif
 
+inline int is_lastheard_enabled() { return 1; }
 
-inline int is_lastheard_enabled()
-{
-    return 1 ;
-}
+inline int is_clog_enabled() { return 1; }
 
-inline int is_clog_enabled()
-{
-    return 1 ;
-}
+inline int is_slog_enabled() { return 1; }
 
-inline int is_slog_enabled()
-{
-    return 1 ;
-}
+void lastheard_putch(
+    char c); // <- 2017-04-17 .. called without a proper prototype, aka "implicit declaration". Always a bad thing.
+void lastheard_printf(const char* fmt, ...);
 
-void lastheard_putch( char c );  // <- 2017-04-17 .. called without a proper prototype, aka "implicit declaration". Always a bad thing.
-void lastheard_printf(const char *fmt, ...);
+void slog_putch(char c); // <- "warning: implicit declaration of function 'slog_putch'" . No, thanks.
+void slog_printf(const char* fmt, ...);
 
-void slog_putch( char c );  // <- "warning: implicit declaration of function 'slog_putch'" . No, thanks.
-void slog_printf(const char *fmt, ...);
-
-void clog_putch( char c );  // <- "warning: implicit declaration of function 'clog_putch'" . Nevermore !
-void clog_printf(const char *fmt, ...);
+void clog_putch(char c); // <- "warning: implicit declaration of function 'clog_putch'" . Nevermore !
+void clog_printf(const char* fmt, ...);
 
 // lastheard
 #define LOGLH(...) lastheard_printf(__VA_ARGS__)
@@ -59,8 +50,8 @@ void slog_draw_poll();
 #define SLOGR(...) slog_printf(__VA_ARGS__)
 
 // gui
-#define CLOGG(...) //clog_printf(__VA_ARGS__)
-#define SLOGG(...) //slog_printf(__VA_ARGS__)
+#define CLOGG(...) // clog_printf(__VA_ARGS__)
+#define SLOGG(...) // slog_printf(__VA_ARGS__)
 
 // boot/setup
 #define CLOGB(...) clog_printf(__VA_ARGS__)

@@ -1,6 +1,6 @@
 /*
  *  debug.h
- * 
+ *
  */
 
 #ifndef DEBUG_H
@@ -8,24 +8,25 @@
 
 #include "addl_config.h"
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define UNTHUMB_POI( adr ) (((uint32_t)adr) & ~1)
+#define UNTHUMB_POI(adr) (((uint32_t)adr) & ~1)
 
-void debug_printf(char *fmt, ...);
-void debug_printhex(void *buf, int len);
-void debug_printasc(void *buf, int len);
+void debug_printf(char* fmt, ...);
+void debug_printhex(void* buf, int len);
+void debug_printasc(void* buf, int len);
 
-void netmon_printf(const char *fmt, ...);
+void netmon_printf(const char* fmt, ...);
 
 extern char nm_logbuf[];
 
-
 #ifdef DEBUG
-#define PRINT(fmt, args...) do { debug_printf(fmt, ## args); } while (0)
+#define PRINT(fmt, args...)                                                                                            \
+    do {                                                                                                               \
+        debug_printf(fmt, ##args);                                                                                     \
+    } while (0)
 #else
 #define PRINT(fmt, args...) /* Don't do anything in release builds */
 #endif
@@ -40,26 +41,33 @@ extern char nm_logbuf[];
 //#define NMPRINTRET() do { netmon_printf("@ 0x%x ", UNTHUMB_POI(__builtin_return_address(0)) ); } while (0)
 //#else
 #define NMPRINTRET() /* Don't do anything in release builds */
-//#endif    
+//#endif
 
 #ifdef DEBUG
 
-#define PRINTRET() do { debug_printf("@ 0x%x ", UNTHUMB_POI(__builtin_return_address(0)) ); } while (0)
-#define PRINTHEX(buf,len) do { debug_printhex(buf,len); } while (0)
-#define PRINTASC(buf,len) do { debug_printasc(buf,len); } while (0)
+#define PRINTRET()                                                                                                     \
+    do {                                                                                                               \
+        debug_printf("@ 0x%x ", UNTHUMB_POI(__builtin_return_address(0)));                                             \
+    } while (0)
+#define PRINTHEX(buf, len)                                                                                             \
+    do {                                                                                                               \
+        debug_printhex(buf, len);                                                                                      \
+    } while (0)
+#define PRINTASC(buf, len)                                                                                             \
+    do {                                                                                                               \
+        debug_printasc(buf, len);                                                                                      \
+    } while (0)
 
 #else
 
-#define PRINTHEX(buf,len) /* Don't do anything in release builds */
-#define PRINTASC(buf,len) /* Don't do anything in release builds */
-#define PRINTRET() /* Don't do anything in release builds */
+#define PRINTHEX(buf, len) /* Don't do anything in release builds */
+#define PRINTASC(buf, len) /* Don't do anything in release builds */
+#define PRINTRET()         /* Don't do anything in release builds */
 
 #endif
-
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* DEBUG_H */
-

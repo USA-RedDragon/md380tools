@@ -1,0 +1,11 @@
+---
+BasedOnStyle:  LLVM
+AlignConsecutiveAssignments: AcrossComments
+AlignConsecutiveBitFields: AcrossComments
+AlignConsecutiveDeclarations: AcrossComments
+AlignConsecutiveMacros: AcrossComments
+IndentWidth:     4
+ColumnLimit:     120
+PointerAlignment: Left
+IndentCaseLabels: true
+IndentCaseBlocks: true

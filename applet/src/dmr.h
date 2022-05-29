@@ -1,6 +1,6 @@
 /*
  *  dmr.h
- * 
+ *
  */
 
 #ifndef DMR_H
@@ -12,17 +12,14 @@
 extern "C" {
 #endif
 
-//extern int g_dst;  // transferbuffer users.csv
-//extern int g_dst_is_group;
-//extern int g_src;
+// extern int g_dst;  // transferbuffer users.csv
+// extern int g_dst_is_group;
+// extern int g_src;
 
-void dmr_CSBK_handler(uint8_t *pkt);
-
-
+void dmr_CSBK_handler(uint8_t* pkt);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* DMR_H */
-
