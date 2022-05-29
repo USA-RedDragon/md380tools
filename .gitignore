@@ -100,3 +100,5 @@ firmware/dl
 # temporary symbols output
 /symbols/symbols_*
 /symbols/symgrate
+
+symbols.elf.sym

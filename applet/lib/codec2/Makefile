@@ -1,16 +1,13 @@
-CC=arm-none-eabi-gcc
-AR=arm-none-eabi-ar
+CC=clang
+AR=llvm-ar
 
 ###########################################
 
 vpath %.c src
 
-CFLAGS  = -g -O2 -Wall -std=c99
-CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
-CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CFLAGS += -ffreestanding -nostdlib
+include ../../common_cflags.mak
+CFLAGS += -Werror $(CFLAGS_SYSROOT) -nostdlib
 CFLAGS += -I. -Iupstream/src -Iinc
-CFLAGS += -fshort-wchar
 CFLAGS += -DCODEC2_MODE_EN_DEFAULT=0 -DCODEC2_MODE_3200_EN=1 -DCODEC2_MODE_1600_EN=1 -DFREEDV_MODE_EN_DEFAULT=0
 CFLAGS += -DM_PI=3.14159265358979323846264338328
 

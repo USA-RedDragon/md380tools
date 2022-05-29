@@ -185,3 +185,5 @@ int main(void) {
   abort_to_mfgr_app();
 }
 
+// Needed by newlib
+extern void _init(void) {;}

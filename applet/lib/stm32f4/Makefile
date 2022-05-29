@@ -1,16 +1,13 @@
-CC=arm-none-eabi-gcc
-AR=arm-none-eabi-ar
+CC=clang
+AR=llvm-ar
 
 ###########################################
 
 vpath %.c src src/peripherals
 
-CFLAGS  = -g -O2 -Wall
-CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
-CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CFLAGS += -ffreestanding -nostdlib
+include ../../common_cflags.mak
+CFLAGS += -Werror $(CFLAGS_SYSROOT) -nostdlib
 CFLAGS += -Iinc -Iinc/core -Iinc/peripherals
-CFLAGS += -fshort-wchar
 
 #SRCS  = stm32f4_discovery.c
 SRCS = misc.c stm32f4xx_dma.c stm32f4xx_rcc.c stm32f4xx_adc.c \

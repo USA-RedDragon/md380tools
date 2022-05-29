@@ -1,6 +1,10 @@
 # MD380Tools -- Firmware Patches for the Tytera MD380 #
 
-by Travis Goodspeed, KK4VCZ
+Originally by Travis Goodspeed, KK4VCZ
+
+## TODO
+
+Update this readme and the docs.
 
 The Tytera MD-380 is handheld radio transceiver for DMR and FM.  In
 2015, this project began patching that firmware by replacing the byte

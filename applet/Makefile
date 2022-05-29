@@ -79,20 +79,18 @@ endif
 
 ###################################################
 
-CC=arm-none-eabi-gcc
-OBJCOPY=arm-none-eabi-objcopy
-OBJDUMP=arm-none-eabi-objdump
+CC=clang
+OBJCOPY=llvm-objcopy
+OBJDUMP=llvm-objdump
 
 GIT_VERSION := $(shell git describe --always --tags)
 
 LINKSCRIPT=applet_$(SRCVERSION).ld
-
-CFLAGS += -std=gnu99 -g -O2 -Wall -T$(LINKSCRIPT)
-CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
-CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-CFLAGS += -fshort-wchar
+include common_cflags.mak
+CFLAGS += -std=gnu99 -fcommon -T$(LINKSCRIPT) $(CFLAGS_SYSROOT)
 ifdef MKLISTING
-CFLAGS += -Wa,-a=$(@:.o=.lst)
+# not in clang
+#CFLAGS += -Wa,-a=$(@:.o=.lst)
 endif
 CFLAGS += -D$(FWDEFINE)	
 CFLAGS += $(CIFLAGS)
@@ -159,9 +157,15 @@ experiment.bin: wrapped.bin
 #flash: wrapped
 #	../md380-dfu upgrade experiment.bin
 
+# mark.tmp is just used as a dummy, we don't actually need data, it gets stripped with --only-section=.symtab anyway
+# Needed because lld's `--just-symbols` doesn't take the simple mapping, only an ELF
+.PHONY: symbols.elf.sym
+symbols.elf.sym: mark
+	@$(OBJCOPY) -I binary -O elf32-littlearm --binary-architecture arm $(shell /usr/bin/env python objcopy-add-symbols.py src/symbols_$(SRCVERSION)) --only-section=.symtab mark.tmp $@
+
 $(SRCS): config.h src/*.h | lib	
-applet.elf: $(SRCS)
-	$(CC) $(CFLAGS) -Wl,--no-wchar-size-warning -Wl,-Map,$(basename $@).map $^ -o $@ -Llib/codec2 -lcodec2 -Llib/stm32f4 -lstm32f4 -Xlinker --just-symbols=src/symbols_$(SRCVERSION)
+applet.elf: $(SRCS) symbols.elf.sym
+	$(CC) $(CFLAGS) -Wl,-Map,$(basename $@).map $^ -o $@ -Llib/codec2 -lcodec2 -Llib/stm32f4 -lstm32f4 -Wl,--just-symbols=symbols.elf.sym
 	
 %.img: %.elf	
 	$(OBJDUMP) -t $< >$(basename $@).img.sym
@@ -177,7 +181,7 @@ clean:
 	"${MAKE}" -C ../patches/$(PATCHDIR) clean
 	"${MAKE}" -C lib/stm32f4 clean
 	"${MAKE}" -C lib/codec2 clean
-	rm -f *.img *.lst *.bin *.elf *.hex *.o *~ *.sym src/*~ src/version.h *.map *.tmp
+	rm -f *.img *.lst *.bin *.elf *.hex *.o *~ *.sym src/*~ src/version.h *.map *.tmp symbols.elf.sym
 
 image_D02:
 	"${MAKE}" FW=D02_032 all  

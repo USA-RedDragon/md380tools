@@ -165,3 +165,11 @@ ci: dbg clean
 check-ignore:
 	find -type f | git check-ignore -v --stdin | less
 
+.PHONY: sca sca_D13
+sca:
+	"${MAKE}" -C applet clean
+	scan-build --use-cc=clang "${MAKE}" -C applet clean ci
+
+sca_D13:
+	"${MAKE}" -C applet clean
+	scan-build --use-cc=clang "${MAKE}" -C applet image_D13
