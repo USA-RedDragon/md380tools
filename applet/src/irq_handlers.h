@@ -36,6 +36,7 @@
 #define IRQ_VT_ADDRESS_ORIGINAL_FW          0x0800C000
 #define IRQ_VT_ADDRESS_OUR_FIRMWARE         0x0809D000
 #define IRQ_ORIGINAL_SYSTICK_HDLR           0x08093f1c // original SysTick_Handler address (without 'Thumb' indicator in bit 0)
+#define IRQ_ORIGINAL_DMA2S3_HDLR           0x08093f1c // original DMA2_Stream3_IRQHandler address
 #define MD380_ADDR_DMR_POWER_SAVE_COUNTDOWN 0x2001e5d0 /* alias 'msg_timer_500' */
 #endif
 #ifdef FW_S13_020 // <- for MD390/RT8 (with GPS)
@@ -141,5 +142,7 @@ void BeepMute(void);                     // mutes the beep without turning the a
 void BeepReset(void);                    // reprograms Timer8 for tytera's funny tones ("Boooo" & co)
 
 #endif // CONFIG_MORSE_OUTPUT ?
+
+void New_DMA2_Stream3_IRQHandler(void); // Original DMA2 Stream3 interrupt handler
 
 #endif // IRQ_HANDLER_H
