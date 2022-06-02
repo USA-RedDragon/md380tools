@@ -1682,9 +1682,14 @@ void SysTick_Handler(void)
 
 } // end SysTick_Handler()
 
+// FM Rx
 void New_DMA2_Stream3_IRQHandler(void) {
     printf("DMA2_Stream3_IRQHandler()\n");
     (*(void_func_ptr)(IRQ_ORIGINAL_DMA2S3_HDLR | 0x01 /*THUMB*/))();
 }
 
+// Microphone
+void New_DMA2_Stream0_IRQHandler(void) {
+    printf("DMA2_Stream0_IRQHandler()\n");
+}
 /* EOF < irq_handlers.c > .  Leave an empty line after this. */
