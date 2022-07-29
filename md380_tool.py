@@ -16,6 +16,7 @@ import sys
 import time
 import usb.core
 from collections import namedtuple
+import traceback
 
 from DFU import DFU, Request, State
 
@@ -882,7 +883,8 @@ def main():
             usage()
 
     except RuntimeError as e:
-        print(e.args[0])
+        print(e)
+        traceback.print_exc()
         exit(1)
     except usb.core.USBError as ue:
         print(ue)
@@ -891,6 +893,7 @@ def main():
         exit(1)
     except Exception as e:
         print(e)
+        traceback.print_exc()
         # print(dfu.get_status())
         exit(1)
 
