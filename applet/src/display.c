@@ -901,32 +901,27 @@ void draw_rx_screen(unsigned int bg_color) {
     dc.font            = LCD_OPT_FONT_8x8 | LCD_OPT_DOUBLE_HEIGHT;
     int nameLen        = 0;
     int smallFontFudge = 0;
-    if (strlen(usr.firstname) > 0) { // have real nickname, display it as before
-        LCD_Printf(&dc, "\t%s - %s\r", usr.callsign, usr.firstname);
+    char* firstname = get_firstname(&usr, firstname_buf, FIRSTNAME_BUFSIZE);
+    nameLen         = strlen(usr.name);
+    if (strcmp(usr.firstname, firstname) != 0 && strlen(usr.firstname) > 0) {
+        LCD_Printf(&dc, "\t%s\r", usr.callsign);
         dc.y += 2;
-    } else {
-        char* firstname = get_firstname(&usr, firstname_buf, FIRSTNAME_BUFSIZE);
-        nameLen         = strlen(usr.name);
-        if (strcmp(usr.firstname, firstname) != 0 && strlen(usr.firstname) > 0) {
-            LCD_Printf(&dc, "\t%s - %s\r", usr.callsign, firstname);
-            dc.y += 2;
-        } else if (nameLen > FULLNAME_MAX_LARGEFONT_CHARS) {
-            if (nameLen > FULLNAME_MAX_MIDDLEFONT_CHARS) {
-                // name will be in small font, allow large font for call
-                dc.y -= 1;
-                LCD_Printf(&dc, "\t%s\r", usr.callsign);
-                dc.y -= 1;
-            } else {
-                // or fullname is going to be in medium font
-                dc.y -= 1;
-                LCD_Printf(&dc, "\t%s\r", usr.callsign);
-                dc.y += 1;
-                smallFontFudge = 2;
-            }
-        } else {
+    } else if (nameLen > FULLNAME_MAX_LARGEFONT_CHARS) {
+        if (nameLen > FULLNAME_MAX_MIDDLEFONT_CHARS) {
+            // name will be in small font, allow large font for call
+            dc.y -= 1;
             LCD_Printf(&dc, "\t%s\r", usr.callsign);
-            dc.y += 2;
+            dc.y -= 1;
+        } else {
+            // or fullname is going to be in medium font
+            dc.y -= 1;
+            LCD_Printf(&dc, "\t%s\r", usr.callsign);
+            dc.y += 1;
+            smallFontFudge = 2;
         }
+    } else {
+        LCD_Printf(&dc, "\t%s\r", usr.callsign);
+        dc.y += 2;
     }
 
     // Display  Q/A ids 2682100 2682101 2220298 2620071 2621168 3101380 (name=15) 3101439 (name=17)
