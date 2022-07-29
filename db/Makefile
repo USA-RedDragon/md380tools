@@ -28,10 +28,10 @@ stripped.csv: custom.csv special.tmp fixed.csv dmrmarc2.tmp reflector.tmp
 	awk -F, -f combine.awk $^ | $(ICONV)  | sort -t ',' -k1g,1 | awk -F, -f strip.awk >stripped.csv
 
 dmrmarc2.tmp: dmrmarc.tmp
-	awk -F, -f insert_nick.awk <$< >$@
+	tail +2 $< | head -n -1 | awk -F, -f reorder.awk >$@
 
 dmrmarc.tmp:
-	wget --timeout=120 --no-check-certificate --wait=3 'https://ham-digital.org/status/users.csv' -O $@
+	wget --timeout=120 --no-check-certificate --wait=3 'https://database.radioid.net/static/user.csv' -O $@
 
 reflector.tmp:
 	curl $(CURL_FLAGS) 'http://registry.dstar.su/reflector.db' | perl -pe '$$_ = "" if ( $$. == 1 ); s#@#,#; s#@.*#,,,,,,#' >$@
