@@ -1019,8 +1019,12 @@ void draw_rx_screen(unsigned int bg_color) {
 
                 } else {
                     dc.font = LCD_OPT_FONT_8x8 | LCD_OPT_DOUBLE_HEIGHT; // 21 chars on line 4 max
-                    dc.y    = dc.y + 3 - smallFontFudge;
-                    LCD_Printf(&dc, "%s %s\r", state, country);
+                    if (strlen(state) > 0) {
+                        dc.y    = dc.y + 3 - smallFontFudge;
+                        LCD_Printf(&dc, "%s %s\r", state, country);
+                    } else {
+                        LCD_Printf(&dc, "%s\r", country);
+                    }
                 }
             }
     }
