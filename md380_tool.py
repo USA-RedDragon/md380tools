@@ -201,7 +201,7 @@ class Tool(DFU):
                   )
 
         for i in range(0, size, 1):
-            cmdstr = cmdstr + data[i]
+            cmdstr = cmdstr + str(data[i])
 
         # print(len(cmdstr))
         self._device.ctrl_transfer(0x21, Request.DNLOAD, 1, 0,
