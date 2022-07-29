@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # md380-codeplug by KK6RWR and Friends
 

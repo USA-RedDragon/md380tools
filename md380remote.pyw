@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # File: md380tools/md380remote.pyw
 # Purpose: 'Remote screen viewer' and screenshot utility 

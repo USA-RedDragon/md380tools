@@ -140,7 +140,7 @@ base.img:
 	
 merged.img: applet.img base.img   
 	cp ../patches/$(PATCHDIR)/patched.img ./merged.img
-	python2 merge_$(SRCVERSION).py merged.img applet.img $(MERGEBASE)
+	python merge_$(SRCVERSION).py merged.img applet.img $(MERGEBASE)
 
 #patched.bin: proj
 #	"${MAKE}" -C ../patches/$(PATCHDIR) patched.img
